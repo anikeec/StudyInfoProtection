@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Labs.</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="lab1.css">
+    <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet" crossorigin="anonymous">   
+</head>
+<body>
+<noscript><h2 style="color: #ff0000; text-align: center;">Seems your browser doesn't support Javascript! 
+    Please enable Javascript and reload this page!</h2></noscript>
+    <div id="main-content" class="container">
+        <nav class="navbar navbar-default">
+            <div id="mainNavbar" class="container-fluid">
+              <!-- Brand and toggle get grouped for better mobile display -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                  <li><a href="/lab1.html">lab1</a></li>
+                  <li><a href="/lab2.html">lab2</a></li>
+                  <li><a href="/lab4.html">lab4</a></li>
+                  <li><a href="/lab5.html">lab7</a></li>
+                  
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" 
+                       role="button" aria-haspopup="true" 
+                       aria-expanded="false">Operations <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="/lab1.html">lab1</a></li>
+                    </ul>
+                  </li>
+                  
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="/logout" id="logoutLink"><span class="glyphicon glyphicon-log-out"></span> Exit</a></li>
+                </ul>
+              </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
+        <div class="row">
+            <div class="col-md-12 alert alert-danger fade in" id="alertMessageDiv">
+                <strong id="alertMessage"></strong>
+            </div>
+        </div>  
+        
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <label class="control-label"><h3>Enter information for encryption.</h3></label>
+                <form >                    
+                    <div class="form-group">
+                        <label for="sourceMessageInput" class="control-label">Source message: </label>
+                        <input type="text" class="form-control" style="width: 300px;" 
+                               name="sourceMessageInput" id="sourceMessageInput" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="rowWordInput" class="control-label">Row word: </label>
+                        <input type="text" class="form-control" style="width: 120px;" 
+                               name="rowWordInput" id="rowWordInput" placeholder="word">
+                    </div>
+                    <div class="form-group">
+                        <label for="columnWordInput" class="control-label">Column word: </label>
+                        <input type="text" class="form-control" style="width: 120px;" 
+                                 name="columnWordInput" id="columnWordInput" placeholder="word">
+                    </div>
+                    <div class="form-group">
+                        <label for="rowSequenceInput" class="control-label">Row sequence: </label>
+                        <input type="text" class="form-control" style="width: 120px;" 
+                               name="rowSequenceInput" id="rowSequenceInput" placeholder="0 1 2 3">
+                    </div>
+                    <div class="form-group">
+                        <label for="columnSequenceInput" class="control-label">Column sequence: </label>
+                        <input type="text" class="form-control" style="width: 120px;" 
+                                 name="columnSequenceInput" id="columnSequenceInput" placeholder="0 1 2 3">
+                    </div>
+                    <button type="submit" class="btn btn-primary " 
+                            id="gerResultButton">Get result</button>
+                    <div class="form-group">
+                        <label for="encodedMessage" class="control-label"
+                               style="margin-top: 10px;">Encoded message: </label>
+                        <input type="text" class="form-control" style="width: 300px;" 
+                               name="encodedMessage" id="encodedMessage">
+                    </div>
+                </form> 
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="form-group">
+                    <label for="connectionStateLog" id="connectionStateLogLabel" >Connection log</label>
+                    <textarea class="form-control" id="connectionStateLog" 
+                              rows="3" readonly="" style="overflow-y: scroll; font-size: 12px;"></textarea>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/jquery-cookie/jquery.cookie.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script src="utils.js"></script>
+    <script src="lab1.js"></script>
+</body>
+</html>
