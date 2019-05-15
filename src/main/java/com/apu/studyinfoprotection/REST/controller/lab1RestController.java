@@ -96,6 +96,13 @@ public class lab1RestController {
             return new RestErrorPacket("Wrong columnSequence format");
         }
         
+        char[] encodedRowWord = new char[MATRIX_SIDE];
+        char[] encodedColumnWord = new char[MATRIX_SIDE];
+        for(int i=0; i<MATRIX_SIDE; i++) {
+            encodedRowWord[i] = rowWord.charAt(rowSequence[i]);
+            encodedColumnWord[i] = columnWord.charAt(columnSequence[i]);
+        }
+        
         //encode
         char[][] encodedMessageStrArrayX = new char[MATRIX_SIDE][MATRIX_SIDE];
         for(int y=0; y<MATRIX_SIDE; y++) {
@@ -128,8 +135,10 @@ public class lab1RestController {
         
         response.setColumnSequence(columnSequenceStr);
         response.setRowSequence(rowSequenceStr);
-        response.setColumnWord(columnWord);
-        response.setRowWord(rowWord);
+        response.setColumnWord(new String(encodedColumnWord));
+        response.setRowWord(new String(encodedRowWord));
+        response.setEncryptedColumnWord(columnWord);
+        response.setEncryptedRowWord(rowWord);
         
         return response;
     }

@@ -59,8 +59,9 @@ function encryptMessageResponseJsonHandle(response) {
     if(packetType === 'EncryptMessageResponse') {
         UTILS.setConnectedStatus('EncryptMessageResponse received successfully.');
         state = StateEnum.ST_ENCRYPT_MESSAGE_REQ_RECEIVED; 
-        var result = JSON.parse(response).encryptedMessage;
-        $("#encodedMessage").val(result);
+        $("#encodedMessage").val(JSON.parse(response).encryptedMessage);
+        $("#encodedRowWord").val(JSON.parse(response).encryptedRowWord);
+        $("#encodedColumnWord").val(JSON.parse(response).encryptedColumnWord);
     } else if(packetType === 'ErrorPacket') {
         var errors = JSON.parse(response).message;
         UTILS.showAlert(errors);

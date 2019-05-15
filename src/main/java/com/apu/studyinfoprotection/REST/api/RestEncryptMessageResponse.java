@@ -31,6 +31,12 @@ public class RestEncryptMessageResponse extends RestBasePacket {
     
     @Getter @Setter
     private String encryptedMessage;
+    
+    @Getter @Setter
+    private String encryptedRowWord;
+    
+    @Getter @Setter
+    private String encryptedColumnWord;
 
     public RestEncryptMessageResponse() {
         this.packetType = RestPacketType.ENCRYPT_MESSAGE_RESPONSE;
