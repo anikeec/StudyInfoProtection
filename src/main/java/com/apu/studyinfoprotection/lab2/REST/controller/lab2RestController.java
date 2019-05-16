@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.apu.studyinfoprotection.REST.controller;
+package com.apu.studyinfoprotection.lab2.REST.controller;
 
+import com.apu.studyinfoprotection.lab1.REST.comtroller.lab1RestController;
 import com.apu.studyinfoprotection.REST.api.RestBasePacket;
-import com.apu.studyinfoprotection.REST.api.Lab1RestEncryptMessageRequest;
-import com.apu.studyinfoprotection.REST.api.Lab2RestDecryptMessageRequest;
-import com.apu.studyinfoprotection.REST.api.Lab2RestDecryptMessageResponse;
-import com.apu.studyinfoprotection.REST.api.Lab2RestEncryptMessageRequest;
-import com.apu.studyinfoprotection.REST.api.Lab2RestEncryptMessageResponse;
+import com.apu.studyinfoprotection.lab1.REST.api.Lab1RestEncryptMessageRequest;
+import com.apu.studyinfoprotection.lab2.REST.api.Lab2RestDecryptMessageRequest;
+import com.apu.studyinfoprotection.lab2.REST.api.Lab2RestDecryptMessageResponse;
+import com.apu.studyinfoprotection.lab2.REST.api.Lab2RestEncryptMessageRequest;
+import com.apu.studyinfoprotection.lab2.REST.api.Lab2RestEncryptMessageResponse;
 import com.apu.studyinfoprotection.REST.api.RestErrorPacket;
 import com.apu.studyinfoprotection.lab2.DecryptorCezar;
 import com.apu.studyinfoprotection.lab2.EncryptorCezar;

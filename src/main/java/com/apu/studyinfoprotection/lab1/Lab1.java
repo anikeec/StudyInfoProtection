@@ -5,7 +5,7 @@
  */
 package com.apu.studyinfoprotection.lab1;
 
-import com.apu.studyinfoprotection.REST.api.Lab1DecryptedMessage;
+import com.apu.studyinfoprotection.lab1.REST.api.Lab1DecryptedMessage;
 import java.util.HashSet;
 import java.util.Set;
 

@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.apu.studyinfoprotection.REST.api;
+package com.apu.studyinfoprotection.lab2.REST.api;
 
+import com.apu.studyinfoprotection.REST.api.RestBasePacket;
+import com.apu.studyinfoprotection.REST.api.RestPacketType;
 import lombok.Getter;
 import lombok.Setter;
 

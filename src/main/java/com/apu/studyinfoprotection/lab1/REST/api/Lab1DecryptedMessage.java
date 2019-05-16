@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.apu.studyinfoprotection.REST.api;
+package com.apu.studyinfoprotection.lab1.REST.api;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,10 +12,7 @@ import lombok.Setter;
  *
  * @author apu
  */
-public class Lab1RestEncryptMessageRequest extends RestBasePacket {
-    
-    @Getter 
-    private String sourceMessage;
+public class Lab1DecryptedMessage {
     
     @Getter @Setter
     private String rowWord;
@@ -24,13 +21,14 @@ public class Lab1RestEncryptMessageRequest extends RestBasePacket {
     private String columnWord;
     
     @Getter @Setter
-    private String rowSequence;
-    
-    @Getter @Setter
-    private String columnSequence;
+    private String message;
 
-    public Lab1RestEncryptMessageRequest() {
-        this.packetType = RestPacketType.ENCRYPT_MESSAGE_REQUEST;
+    public Lab1DecryptedMessage(String message, String rowWord, String columnWord) {
+        this.rowWord = rowWord;
+        this.columnWord = columnWord;
+        this.message = message;
     }
+    
+    
     
 }
