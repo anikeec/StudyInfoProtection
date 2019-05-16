@@ -41,7 +41,7 @@ public class lab1RestController {
     private static final Logger LOGGER = 
                         LogManager.getLogger(lab1RestController.class);
     
-    private final int MATRIX_SIDE = 5;
+    private final int MATRIX_SIDE = 4;
     private final int SEQUENCE_SIZE = (MATRIX_SIDE * 2) - 1;
     private final int TEXT_SIZE_MAX = MATRIX_SIDE * MATRIX_SIDE;
     
@@ -211,9 +211,6 @@ public class lab1RestController {
             columnWordListAll.add(
                     new EncryptedWord(columnWord, sequence, new String(tempBuffer)));
         }
-        
-//        Set<EncryptedWord> rowWordGoodList = findGoodResultWords(rowWordListAll);
-//        Set<EncryptedWord> columnWordGoodList = findGoodResultWords(columnWordListAll);
         
         Set<EncryptedWord> rowWordGoodList = new HashSet<>();
         Set<EncryptedWord> columnWordGoodList = new HashSet<>();
