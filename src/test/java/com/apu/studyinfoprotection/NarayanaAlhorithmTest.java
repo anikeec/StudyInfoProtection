@@ -5,6 +5,7 @@
  */
 package com.apu.studyinfoprotection;
 
+import com.apu.studyinfoprotection.lab1.NarayanaAlhorithm;
 import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;

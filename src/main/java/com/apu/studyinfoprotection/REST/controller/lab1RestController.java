@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package com.apu.studyinfoprotection.REST.controller;
-import com.apu.studyinfoprotection.Dictionaries;
+import com.apu.studyinfoprotection.lab1.Dictionaries;
 import com.apu.studyinfoprotection.REST.api.DecryptedMessage;
 import com.apu.studyinfoprotection.REST.api.RestBasePacket;
 import com.apu.studyinfoprotection.REST.api.RestDecryptMessageRequest;
