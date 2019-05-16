@@ -5,8 +5,6 @@
  */
 package com.apu.studyinfoprotection.REST.api;
 
-import java.util.ArrayList;
-import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,9 +12,9 @@ import lombok.Setter;
  *
  * @author apu
  */
-public class Lab1RestDecryptMessageResponse extends RestBasePacket {
+public class Lab1RestDecryptMessageRequest extends RestBasePacket {
     
-    @Getter @Setter
+    @Getter 
     private String sourceMessage;
     
     @Getter @Setter
@@ -24,12 +22,9 @@ public class Lab1RestDecryptMessageResponse extends RestBasePacket {
     
     @Getter @Setter
     private String columnWord;
-    
-    @Getter @Setter
-    List<Lab1DecryptedMessage> list = new ArrayList<>();
 
-    public Lab1RestDecryptMessageResponse() {
-        this.packetType = RestPacketType.DECRYPT_MESSAGE_RESPONSE;
+    public Lab1RestDecryptMessageRequest() {
+        this.packetType = RestPacketType.DECRYPT_MESSAGE_REQUEST;
     }
     
 }

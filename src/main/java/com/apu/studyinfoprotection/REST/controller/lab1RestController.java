@@ -5,7 +5,7 @@
  */
 package com.apu.studyinfoprotection.REST.controller;
 import com.apu.studyinfoprotection.lab1.Dictionaries;
-import com.apu.studyinfoprotection.REST.api.DecryptedMessage;
+import com.apu.studyinfoprotection.REST.api.Lab1DecryptedMessage;
 import com.apu.studyinfoprotection.REST.api.RestBasePacket;
 import com.apu.studyinfoprotection.REST.api.Lab1RestDecryptMessageRequest;
 import com.apu.studyinfoprotection.REST.api.Lab1RestDecryptMessageResponse;
@@ -217,10 +217,10 @@ public class lab1RestController {
                                                     rowWordGoodList, 
                                                     columnWordGoodList);
         
-        List<DecryptedMessage> decrMsgList = new ArrayList<>();
+        List<Lab1DecryptedMessage> decrMsgList = new ArrayList<>();
         for(EncryptedWord foundRowWord:rowWordGoodList) {
             for(EncryptedWord foundColumnWord:columnWordGoodList) {
-                Set<DecryptedMessage> decryptedMsgSet = 
+                Set<Lab1DecryptedMessage> decryptedMsgSet = 
                     lab1.decryptMessage(sourceMessage, foundRowWord, foundColumnWord);
                 decrMsgList.addAll(decryptedMsgSet);
             }

@@ -5,7 +5,7 @@
  */
 package com.apu.studyinfoprotection.lab1;
 
-import com.apu.studyinfoprotection.REST.api.DecryptedMessage;
+import com.apu.studyinfoprotection.REST.api.Lab1DecryptedMessage;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,17 +17,17 @@ public class Lab1 {
     
     public static int MATRIX_SIDE = 4;
     
-    public Set<DecryptedMessage> decryptMessage(String encryptedMsg,
+    public Set<Lab1DecryptedMessage> decryptMessage(String encryptedMsg,
                                         EncryptedWord foundRowWord, 
                                         EncryptedWord foundColumnWord) {
 
-        Set<DecryptedMessage> result = new HashSet<>();
+        Set<Lab1DecryptedMessage> result = new HashSet<>();
         
         String message = decryptMessage(encryptedMsg, 
                                             foundRowWord.getCombination(), 
                                             foundColumnWord.getCombination());
         
-        result.add(new DecryptedMessage(message,
+        result.add(new Lab1DecryptedMessage(message,
                                         foundRowWord.getResultWord(),
                                         foundColumnWord.getResultWord()
                                         ));
