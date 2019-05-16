@@ -13,6 +13,8 @@ import com.apu.studyinfoprotection.REST.api.RestEncryptMessageRequest;
 import com.apu.studyinfoprotection.REST.api.RestEncryptMessageResponse;
 import com.apu.studyinfoprotection.REST.api.RestErrorPacket;
 import com.apu.studyinfoprotection.lab1.EncryptedWord;
+import com.apu.studyinfoprotection.utils.FileUtils;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -216,12 +218,6 @@ public class lab1RestController {
         return response;
     }
     
-    private Set<EncryptedWord> findGoodResultWords(Set<EncryptedWord> srcWordsSet) {
-        
-        //temp state
-        return srcWordsSet;
-    }
-    
     private Set<DecryptedMessage> decryptMessage(String encryptedMsg,
                                         EncryptedWord foundRowWord, 
                                         EncryptedWord foundColumnWord) {
@@ -300,6 +296,41 @@ public class lab1RestController {
             resultSet.add(new String(tempBuffer));
         } while (NarayanaAlhorithm.nextPermutation(sequence, NarayanaAlhorithm::greater));
         
+        return resultSet;
+    }
+    
+    private static final String RUSSION_DICTIONARY = "./pldb-win.txt";
+    private static final String ENGLISH_DICTIONARY = "./english.txt";
+    
+    private Set<EncryptedWord> findGoodResultWords(Set<EncryptedWord> srcWordsSet) {
+        
+        String text = null;
+        try {
+            text = FileUtils.getTextFromFile(RUSSION_DICTIONARY);
+        } catch(IOException ex) {
+            return srcWordsSet;
+        }
+        
+        Set<EncryptedWord> resultSet = new HashSet<>();
+        for(EncryptedWord encryptedWord: srcWordsSet) {
+            if(text.contains(" " + encryptedWord.getResultWord() + "/r/n")) {//Character.toString((char)0x0D)
+                resultSet.add(encryptedWord);
+            }
+        }
+        
+        try {
+            text = FileUtils.getTextFromFile(ENGLISH_DICTIONARY);
+        } catch(IOException ex) {
+            return srcWordsSet;
+        }
+        
+        for(EncryptedWord encryptedWord: srcWordsSet) {
+            if(text.contains(encryptedWord.getResultWord() + "/r/n")) {
+                resultSet.add(encryptedWord);
+            }
+        }
+        
+        //temp state
         return resultSet;
     }
     
