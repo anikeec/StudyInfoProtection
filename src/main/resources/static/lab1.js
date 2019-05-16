@@ -72,6 +72,33 @@ function encryptMessageResponseJsonHandle(response) {
     modifyElementsAccordingToState(state);
 }
 
+function decryptMessageResponseJsonHandle(response) {
+   var packetType = JSON.parse(response).packetType; 
+    if(packetType === 'DecryptMessageResponse') {
+        UTILS.setConnectedStatus('DecryptMessageResponse received successfully.');
+        state = StateEnum.ST_DECRYPT_MESSAGE_REQ_RECEIVED; 
+        $.each(JSON.parse(response).list, function(i, item) {
+            insertTableItem(i, item);        
+        });
+    } else if(packetType === 'ErrorPacket') {
+        var errors = JSON.parse(response).message;
+        UTILS.showAlert(errors);
+        UTILS.setConnectedStatus('DecryptMessageResponse has errors: ' + errors);
+        state = StateEnum.ST_DECRYPT_MESSAGE_REQ_ERROR;
+    } 
+    UTILS.responseWaitingStop();
+    modifyElementsAccordingToState(state);
+}
+
+function insertTableItem(id, item) {
+    var html = '<tr>' 
+            + '<td scope="col" class="col-md-3 col-sm-3 col-xs-3">' + item.rowWord + '</td>'  
+            + '<td scope="col" class="col-md-3 col-sm-3 col-xs-3">' + item.columnWord + '</td>' 
+            + '<td scope="col" class="col-md-6 col-sm-6 col-xs-6">' + item.message + '</td>'
+            + '</tr>';
+    $('#decryptedTable > tbody:last-child').append(html);
+}
+
 //------------------------------------------------------------------------------
 //REST
 //------------------------------------------------------------------------------
@@ -91,6 +118,21 @@ function encryptMessage() {
                                 'columnWord' : columnWord,
                                 'rowSequence' : rowSequence,
                                 'columnSequence' : columnSequence});
+    UTILS.setConnectedStatus("EncryptMessageRequest sent");    
+}
+
+function decryptMessage() {
+    var sourceMessage = $("#encryptedMessageInput").val();
+    var rowWord = $("#encryptedRowWordInput").val();
+    var columnWord = $("#encryptedColumnWordInput").val();
+    
+    state = StateEnum.ST_DECRYPT_MESSAGE_REQ_SENT;
+    modifyElementsAccordingToState(state); 
+    UTILS.responseWaitingStart(SERVER_QUERY_TIMEOUT);
+    asyncRESTRequestHandler({'cmd': 'decryptMessage',
+                                'sourceMessage' : sourceMessage,
+                                'rowWord' : rowWord,
+                                'columnWord' : columnWord});
     UTILS.setConnectedStatus("EncryptMessageRequest sent");    
 }
 
@@ -117,7 +159,25 @@ function asyncRESTRequestHandler(data) {
                                     'columnSequence' : data.columnSequence});
             console.log(json);
             xhr.send(json);
-            break;      
+            break; 
+        case 'decryptMessage':
+            xhr = new XMLHttpRequest();
+            xhr.open('POST', '/rest/lab1/decrypt', true);
+            xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            xhr.onload = function () {
+                console.log(xhr.responseText);
+                decryptMessageResponseJsonHandle(xhr.responseText);
+            };    
+            xhr.onabort = function () {
+                UTILS.setConnectedStatus('DecryptMessageRequest was aborted.');
+            };
+            json = JSON.stringify({packetType:"DecryptMessageRequest",
+                                    'sourceMessage' : data.sourceMessage,
+                                    'rowWord' : data.rowWord,
+                                    'columnWord' : data.columnWord});
+            console.log(json);
+            xhr.send(json);
+            break; 
         case 'stop':
             if(xhr !== null) {
                 xhr.abort();
@@ -149,6 +209,11 @@ $(document).ready(function () {
     $( "#gerResultButton" ).click(function() {
         if(UTILS.isAnotherProcessRunning()) { return; };
         encryptMessage();
+    });
+    
+    $( "#gerDecryptResultButton" ).click(function() {
+        if(UTILS.isAnotherProcessRunning()) { return; };
+        decryptMessage();
     });
     
 });

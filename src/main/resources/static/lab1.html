@@ -56,7 +56,7 @@
         </div>  
         
         <div class="row">
-            <div class="col-md-12 col-sm-12">
+            <div class="col-md-6 col-sm-6">
                 <label class="control-label"><h3>Enter information for encryption.</h3></label>
                 <form >                    
                     <div class="form-group">
@@ -85,35 +85,65 @@
                                  name="columnSequenceInput" id="columnSequenceInput" placeholder="0 1 2 3">
                     </div>
                     <button type="submit" class="btn btn-primary " 
-                            id="gerResultButton">Get result</button>
+                            id="gerResultButton">Encrypt</button>
                     <div class="form-group">
                         <label for="encodedMessage" class="control-label"
-                               style="margin-top: 10px;">Encoded message: </label>
+                               style="margin-top: 10px;">Encrypted message:</label>
                         <input type="text" class="form-control" style="width: 300px;" 
                                name="encodedMessage" id="encodedMessage">
                     </div>
                     <div class="form-group">
-                        <label for="encodedRowWord" class="control-label">Encoded row word: </label>
+                        <label for="encodedRowWord" class="control-label">Encrypted row word:</label>
                         <input type="text" class="form-control" style="width: 120px;" 
                                name="encodedRowWord" id="encodedRowWord">
                     </div>
                     <div class="form-group">
-                        <label for="encodedColumnWord" class="control-label">Encoded column word: </label>
+                        <label for="encodedColumnWord" class="control-label">Encrypted column word:</label>
                         <input type="text" class="form-control" style="width: 120px;" 
                                  name="encodedColumnWord" id="encodedColumnWord">
                     </div>
                 </form> 
             </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="form-group">
-                    <label for="connectionStateLog" id="connectionStateLogLabel" >Connection log</label>
-                    <textarea class="form-control" id="connectionStateLog" 
-                              rows="3" readonly="" style="overflow-y: scroll; font-size: 12px;"></textarea>
+            
+            <div class="col-md-6 col-sm-6">
+                <label class="control-label"><h3>Enter information for decryption.</h3></label>
+                <form >                    
+                    <div class="form-group">
+                        <label for="encryptedMessageInput" class="control-label">Encrypted message:</label>
+                        <input type="text" class="form-control" style="width: 300px;" 
+                               name="encryptedMessageInput" id="encryptedMessageInput" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="encryptedRowWordInput" class="control-label">Encrypted row word:</label>
+                        <input type="text" class="form-control" style="width: 120px;" 
+                               name="encryptedRowWordInput" id="encryptedRowWordInput" placeholder="word">
+                    </div>
+                    <div class="form-group">
+                        <label for="encryptedColumnWordInput" class="control-label">Encrypted column word:</label>
+                        <input type="text" class="form-control" style="width: 120px;" 
+                                 name="encryptedColumnWordInput" id="encryptedColumnWordInput" placeholder="word">
+                    </div>
+                    <button type="submit" class="btn btn-primary " 
+                            id="gerDecryptResultButton">Decrypt</button>
+
+                </form> 
+                <label for="decryptedTable" class="control-label" style="margin-top: 10px;">
+                    Decryption results:
+                </label>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 250pt; overflow: auto; border: solid lightgrey;">
+                    <table class="table table-bordered table-striped mb-0" id="decryptedTable">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="col-md-3 col-sm-3 col-xs-3">row</th>
+                                <th scope="col" class="col-md-3 col-sm-3 col-xs-3">column</th>
+                                <th scope="col" class="col-md-6 col-sm-6 col-xs-6">decrypted word</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
+            </div>            
         </div>
 
     </div>

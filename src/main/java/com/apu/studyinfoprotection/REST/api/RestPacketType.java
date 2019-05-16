@@ -14,5 +14,7 @@ public class RestPacketType {
     public static String ERROR_PACKET = "ErrorPacket";
     public static String ENCRYPT_MESSAGE_REQUEST = "EncryptMessageRequest";
     public static String ENCRYPT_MESSAGE_RESPONSE = "EncryptMessageResponse";
+    public static String DECRYPT_MESSAGE_REQUEST = "DecryptMessageRequest";
+    public static String DECRYPT_MESSAGE_RESPONSE = "DecryptMessageResponse";
     
 }

@@ -24,7 +24,11 @@
                 
                 "ST_ENCRYPT_MESSAGE_REQ_SENT":          5, 
                 "ST_ENCRYPT_MESSAGE_REQ_RECEIVED":      6,
-                "ST_ENCRYPT_MESSAGE_REQ_ERROR":         7                
+                "ST_ENCRYPT_MESSAGE_REQ_ERROR":         7,
+                
+                "ST_DECRYPT_MESSAGE_REQ_SENT":          8, 
+                "ST_DECRYPT_MESSAGE_REQ_RECEIVED":      9,
+                "ST_DECRYPT_MESSAGE_REQ_ERROR":         10
                 
             };
 
@@ -52,13 +56,13 @@
     //connectedStatus 
     //------------------------------------------------------------------------------
     function setConnectedStatus(status) {
-        var conStateLoggingElement = $("#connectionStateLog");
-        status = getDateTime() + " - " + status;
-        if(conStateLoggingElement.val() !== '') {
-            status = '\n' + status;
-        };
-        conStateLoggingElement.append(status); 
-        conStateLoggingElement.scrollTop(conStateLoggingElement[0].scrollHeight);
+//        var conStateLoggingElement = $("#connectionStateLog");
+//        status = getDateTime() + " - " + status;
+//        if(conStateLoggingElement.val() !== '') {
+//            status = '\n' + status;
+//        };
+//        conStateLoggingElement.append(status); 
+//        conStateLoggingElement.scrollTop(conStateLoggingElement[0].scrollHeight);
     }
 
     //------------------------------------------------------------------------------
