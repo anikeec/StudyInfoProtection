@@ -168,6 +168,13 @@ public class lab1RestController {
         if(sourceMessage.length() == 0) {
             return new RestErrorPacket("Wrong sourceMessage length");
         }
+        if(sourceMessage.length() < TEXT_SIZE_MAX) {
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i<(TEXT_SIZE_MAX - sourceMessage.length()); i++) {
+                sb.append(" ");
+            }
+            sourceMessage += sb.toString();
+        }
         if(sourceMessage.length() > TEXT_SIZE_MAX) {
             sourceMessage = sourceMessage.substring(0, TEXT_SIZE_MAX);
         }
@@ -205,8 +212,13 @@ public class lab1RestController {
                     new EncryptedWord(columnWord, sequence, new String(tempBuffer)));
         }
         
-        Set<EncryptedWord> rowWordGoodList = findGoodResultWords(rowWordListAll);
-        Set<EncryptedWord> columnWordGoodList = findGoodResultWords(columnWordListAll);
+//        Set<EncryptedWord> rowWordGoodList = findGoodResultWords(rowWordListAll);
+//        Set<EncryptedWord> columnWordGoodList = findGoodResultWords(columnWordListAll);
+        
+        Set<EncryptedWord> rowWordGoodList = new HashSet<>();
+        Set<EncryptedWord> columnWordGoodList = new HashSet<>();
+        
+        findGoodResultWordsCombination(rowWordListAll, columnWordListAll, rowWordGoodList, columnWordGoodList);
         
         List<DecryptedMessage> decrMsgList = new ArrayList<>();
         for(EncryptedWord foundRowWord:rowWordGoodList) {
@@ -308,14 +320,14 @@ public class lab1RestController {
         return resultSet;
     }
     
-    private static final String RUSSION_DICTIONARY = "./pldb-win.txt";
+    private static final String RUSSIAN_DICTIONARY = "./pldb-win.txt";
     private static final String ENGLISH_DICTIONARY = "./english.txt";
     
     private Set<EncryptedWord> findGoodResultWords(Set<EncryptedWord> srcWordsSet) {
         
         String text = null;
         try {
-            text = FileUtils.getTextFromFile(RUSSION_DICTIONARY);
+            text = FileUtils.getTextFromFile(RUSSIAN_DICTIONARY);
         } catch(IOException ex) {
             return srcWordsSet;
         }
@@ -342,5 +354,38 @@ public class lab1RestController {
         //temp state
         return resultSet;
     }
+    
+    private void findGoodResultWordsCombination(Set<EncryptedWord> rowWordSetAll, 
+                                                Set<EncryptedWord> columnWordSetAll, 
+                                                Set<EncryptedWord> rowWordGoodSet, 
+                                                Set<EncryptedWord> columnWordGoodSet) {
+        
+        Set<EncryptedWord> rowWordTempSet = findGoodResultWords(rowWordSetAll);
+        Set<EncryptedWord> columnWordTempSet = findGoodResultWords(columnWordSetAll);
+        
+        String russianDictionary;
+        String englishDictionary;
+        try {
+            russianDictionary = FileUtils.getTextFromFile(RUSSIAN_DICTIONARY);
+            englishDictionary = FileUtils.getTextFromFile(ENGLISH_DICTIONARY);
+        } catch(IOException ex) {
+            rowWordGoodSet = rowWordTempSet;
+            columnWordGoodSet = columnWordTempSet;
+            return;
+        }       
+        
+        Set<EncryptedWord> resultSet = new HashSet<>();
+        for(EncryptedWord encryptedColumnWord: columnWordTempSet) {
+            for(EncryptedWord encryptedRowWord: rowWordTempSet) {
+                if((russianDictionary.contains(" " + encryptedRowWord.getResultWord() + "/r/n") ||
+                        englishDictionary.contains("/r/n" + encryptedRowWord.getResultWord() + "/r/n")) && 
+                    (russianDictionary.contains(" " + encryptedColumnWord.getResultWord() + "/r/n") ||
+                        englishDictionary.contains("/r/n" + encryptedColumnWord.getResultWord() + "/r/n"))) {
+                    rowWordGoodSet.add(encryptedRowWord);
+                    columnWordGoodSet.add(encryptedColumnWord);
+                }
+            }
+        }
+    };
     
 }
