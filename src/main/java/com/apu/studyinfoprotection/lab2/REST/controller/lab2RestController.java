@@ -7,7 +7,6 @@ package com.apu.studyinfoprotection.lab2.REST.controller;
 
 import com.apu.studyinfoprotection.lab1.REST.comtroller.lab1RestController;
 import com.apu.studyinfoprotection.REST.api.RestBasePacket;
-import com.apu.studyinfoprotection.lab1.REST.api.Lab1RestEncryptMessageRequest;
 import com.apu.studyinfoprotection.lab2.REST.api.Lab2RestDecryptMessageRequest;
 import com.apu.studyinfoprotection.lab2.REST.api.Lab2RestDecryptMessageResponse;
 import com.apu.studyinfoprotection.lab2.REST.api.Lab2RestEncryptMessageRequest;
@@ -42,20 +41,34 @@ public class lab2RestController {
             return new RestErrorPacket("Wrong message length");
         }
         
-        int number = 0;
-        String numberStr = request.getNumber().trim();
+        int numberA = 0;
+        String numberAStr = request.getNumberA().trim();
         try {
-            number = Integer.parseInt(numberStr);
+            numberA = Integer.parseInt(numberAStr);
         } catch(NumberFormatException ex) {
-            return new RestErrorPacket("Wrong number");
+            return new RestErrorPacket("Wrong numberA");
         }
         
-        EncryptorCezar cezarEncryptor = new EncryptorCezar(message, number);
+        int numberB = 0;
+        String numberBStr = request.getNumberB().trim();
+        try {
+            numberB = Integer.parseInt(numberBStr);
+        } catch(NumberFormatException ex) {
+            return new RestErrorPacket("Wrong numberB");
+        }
+        
+        String encryptedMessage;
+        try {
+            encryptedMessage = new EncryptorCezar().encrypt(message, numberA, numberB);
+        } catch (IllegalArgumentException ex) {
+            return new RestErrorPacket(ex.getMessage());
+        }
      
         Lab2RestEncryptMessageResponse response = new Lab2RestEncryptMessageResponse();
-        response.setEncryptedMessage(cezarEncryptor.getEncText());
+        response.setEncryptedMessage(encryptedMessage);
         response.setMessage(message);
-        response.setNumber("" + number);
+        response.setNumberA("" + numberA);
+        response.setNumberB("" + numberB);
         
         return response;
     }
@@ -69,20 +82,34 @@ public class lab2RestController {
             return new RestErrorPacket("Wrong message length");
         }
         
-        int number = 0;
-        String numberStr = request.getNumber().trim();
+        int numberA = 0;
+        String numberAStr = request.getNumberA().trim();
         try {
-            number = Integer.parseInt(numberStr);
+            numberA = Integer.parseInt(numberAStr);
         } catch(NumberFormatException ex) {
-            return new RestErrorPacket("Wrong number");
+            return new RestErrorPacket("Wrong numberA");
         }
         
-        DecryptorCezar cezarDecryptor = new DecryptorCezar(message, number);
+        int numberB = 0;
+        String numberBStr = request.getNumberB().trim();
+        try {
+            numberB = Integer.parseInt(numberBStr);
+        } catch(NumberFormatException ex) {
+            return new RestErrorPacket("Wrong numberB");
+        }
+        
+        String decryptedMessage;
+        try {
+            decryptedMessage = new DecryptorCezar().decrypt(message, numberA, numberB);
+        } catch (IllegalArgumentException ex) {
+            return new RestErrorPacket(ex.getMessage());
+        }
      
         Lab2RestDecryptMessageResponse response = new Lab2RestDecryptMessageResponse();
-        response.setDecryptedMessage(cezarDecryptor.getDecText());
+        response.setDecryptedMessage(decryptedMessage);
         response.setMessage(message);
-        response.setNumber("" + number);
+        response.setNumberA("" + numberA);
+        response.setNumberB("" + numberB);
         
         return response;
     }

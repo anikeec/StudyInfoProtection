@@ -20,7 +20,10 @@ public class Lab2RestDecryptMessageRequest extends RestBasePacket {
     private String message;
     
     @Getter @Setter
-    private String number;
+    private String numberA;
+    
+    @Getter @Setter
+    private String numberB;
 
     public Lab2RestDecryptMessageRequest() {
         this.packetType = RestPacketType.DECRYPT_MESSAGE_REQUEST;

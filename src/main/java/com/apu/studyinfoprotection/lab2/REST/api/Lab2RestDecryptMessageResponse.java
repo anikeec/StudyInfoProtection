@@ -20,7 +20,10 @@ public class Lab2RestDecryptMessageResponse extends RestBasePacket {
     private String message;
     
     @Getter @Setter
-    private String number;
+    private String numberA;
+    
+    @Getter @Setter
+    private String numberB;
     
     @Getter @Setter
     private String decryptedMessage;;

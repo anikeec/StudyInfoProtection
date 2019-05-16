@@ -100,7 +100,8 @@ function decryptMessageResponseJsonHandle(response) {
 //------------------------------------------------------------------------------
 function encryptMessage() {
     var message = $("#sourceMessageInput").val();
-    var number = $("#numberInput").val();
+    var numberA = $("#numberAInput").val();
+    var numberB = $("#numberBInput").val();
     
     $( "#gerResultButtonSpinner" ).show();
     
@@ -109,13 +110,15 @@ function encryptMessage() {
     UTILS.responseWaitingStart(SERVER_QUERY_TIMEOUT);
     asyncRESTRequestHandler({'cmd': 'encryptMessage',
                                 'message' : message,
-                                'number' : number});
+                                'numberA' : numberA,
+                                'numberB' : numberB});
     UTILS.setConnectedStatus("EncryptMessageRequest sent");    
 }
 
 function decryptMessage() {
     var message = $("#encryptedMessageInput").val();
-    var number = $("#encryptedNumberInput").val();
+    var numberA = $("#encryptedNumberAInput").val();
+    var numberB = $("#encryptedNumberBInput").val();
     
     $( "#gerDecryptResultButtonSpinner" ).show();
     
@@ -124,7 +127,8 @@ function decryptMessage() {
     UTILS.responseWaitingStart(SERVER_QUERY_TIMEOUT);
     asyncRESTRequestHandler({'cmd': 'decryptMessage',
                                 'message' : message,
-                                'number' : number});
+                                'numberA' : numberA,
+                                'numberB' : numberB});
     UTILS.setConnectedStatus("EncryptMessageRequest sent");    
 }
 
@@ -145,7 +149,8 @@ function asyncRESTRequestHandler(data) {
             };
             json = JSON.stringify({packetType:"EncryptMessageRequest",
                                     'message' : data.message,
-                                    'number' : data.number});
+                                    'numberA' : data.numberA,
+                                    'numberB' : data.numberB});
             console.log(json);
             xhr.send(json);
             break; 
@@ -162,7 +167,8 @@ function asyncRESTRequestHandler(data) {
             };
             json = JSON.stringify({packetType:"DecryptMessageRequest",
                                     'message' : data.message,
-                                    'number' : data.number});
+                                    'numberA' : data.numberA,
+                                    'numberB' : data.numberB});
             console.log(json);
             xhr.send(json);
             break; 
