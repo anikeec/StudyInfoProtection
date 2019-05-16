@@ -34,7 +34,7 @@ function modifyElementsAccordingToState(state) {
 //------------------------------------------------------------------------------
 //wait for response process 
 //------------------------------------------------------------------------------
-const SERVER_QUERY_TIMEOUT = 10000;
+const SERVER_QUERY_TIMEOUT = 200000;
 
 function responseWaitingTimeoutError() {        
     var mess = 'Server timeout error.';

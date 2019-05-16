@@ -41,37 +41,46 @@ public class lab1RestController {
     private static final Logger LOGGER = 
                         LogManager.getLogger(lab1RestController.class);
     
-    private final int MATRIX_SIDE = 4;
+    private final int MATRIX_SIDE = 5;
+    private final int SEQUENCE_SIZE = (MATRIX_SIDE * 2) - 1;
+    private final int TEXT_SIZE_MAX = MATRIX_SIDE * MATRIX_SIDE;
     
     @RequestMapping(path="/rest/lab1/encrypt",  method=RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public RestBasePacket encryptMessage(@RequestBody RestEncryptMessageRequest request) {
    
-        String sourceMessage = request.getSourceMessage();
+        String sourceMessage = request.getSourceMessage().trim();
         if(sourceMessage.length() == 0) {
             return new RestErrorPacket("Wrong sourceMessage length");
         }
-        if(sourceMessage.length() > 16) {
-            sourceMessage = sourceMessage.substring(0, 16);
+        if(sourceMessage.length() < TEXT_SIZE_MAX) {
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i<(TEXT_SIZE_MAX - sourceMessage.length()); i++) {
+                sb.append(" ");
+            }
+            sourceMessage += sb.toString();
         }
+        if(sourceMessage.length() > TEXT_SIZE_MAX) {
+            sourceMessage = sourceMessage.substring(0, TEXT_SIZE_MAX);
+        }        
         
-        String rowWord = request.getRowWord();
-        if((rowWord.length() < 4) || (rowWord.length() > 4)) {
+        String rowWord = request.getRowWord().trim();
+        if((rowWord.length() < MATRIX_SIDE) || (rowWord.length() > MATRIX_SIDE)) {
             return new RestErrorPacket("Wrong rowWord length");
         }
         
-        String columnWord = request.getColumnWord();
-        if((columnWord.length() < 4) || (columnWord.length() > 4)) {
+        String columnWord = request.getColumnWord().trim();
+        if((columnWord.length() < MATRIX_SIDE) || (columnWord.length() > MATRIX_SIDE)) {
             return new RestErrorPacket("Wrong columnWord length");
         }
         
-        String rowSequenceStr = request.getRowSequence();
-        if((rowSequenceStr.length() < 7) || (rowSequenceStr.length() > 7)) {
+        String rowSequenceStr = request.getRowSequence().trim();
+        if((rowSequenceStr.length() < SEQUENCE_SIZE) || (rowSequenceStr.length() > SEQUENCE_SIZE)) {
             return new RestErrorPacket("Wrong rowSequenceStr length");
         }
         
-        String columnSequenceStr = request.getColumnSequence();
-        if((columnSequenceStr.length() < 7) || (columnSequenceStr.length() > 7)) {
+        String columnSequenceStr = request.getColumnSequence().trim();
+        if((columnSequenceStr.length() < SEQUENCE_SIZE) || (columnSequenceStr.length() > SEQUENCE_SIZE)) {
             return new RestErrorPacket("Wrong columnSequenceStr length");
         }
         
@@ -155,21 +164,21 @@ public class lab1RestController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public RestBasePacket decryptMessage(@RequestBody RestDecryptMessageRequest request) {
         
-        String sourceMessage = request.getSourceMessage();
+        String sourceMessage = request.getSourceMessage().trim();
         if(sourceMessage.length() == 0) {
             return new RestErrorPacket("Wrong sourceMessage length");
         }
-        if(sourceMessage.length() > 16) {
-            sourceMessage = sourceMessage.substring(0, 16);
+        if(sourceMessage.length() > TEXT_SIZE_MAX) {
+            sourceMessage = sourceMessage.substring(0, TEXT_SIZE_MAX);
         }
         
-        String rowWord = request.getRowWord();
-        if((rowWord.length() < 4) || (rowWord.length() > 4)) {
+        String rowWord = request.getRowWord().trim();
+        if((rowWord.length() < MATRIX_SIDE) || (rowWord.length() > MATRIX_SIDE)) {
             return new RestErrorPacket("Wrong rowWord length");
         }
         
-        String columnWord = request.getColumnWord();
-        if((columnWord.length() < 4) || (columnWord.length() > 4)) {
+        String columnWord = request.getColumnWord().trim();
+        if((columnWord.length() < MATRIX_SIDE) || (columnWord.length() > MATRIX_SIDE)) {
             return new RestErrorPacket("Wrong columnWord length");
         }
         
