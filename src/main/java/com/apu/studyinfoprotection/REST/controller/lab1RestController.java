@@ -225,18 +225,6 @@ public class lab1RestController {
     private Set<DecryptedMessage> decryptMessage(String encryptedMsg,
                                         EncryptedWord foundRowWord, 
                                         EncryptedWord foundColumnWord) {
-        
-//        Set<String> rowDecryptionCombinationSet = 
-//                            getDecryptionCombinations(foundRowWord, encryptedRowWord);
-//        Set<String> columnDecryptionCombinationSet = 
-//                            getDecryptionCombinations(foundColumnWord, encryptedColumnWord);
-        
-//        Set<String> result = new HashSet<>();
-//        for(String rowCombination:rowDecryptionCombinationSet) {
-//            for(String columnCombination:columnDecryptionCombinationSet) {
-//                result.add(decryptMessage(encryptedMsg, rowCombination, columnCombination));
-//            }
-//        }
 
         Set<DecryptedMessage> result = new HashSet<>();
         
@@ -290,35 +278,6 @@ public class lab1RestController {
         return sb.toString();
     }
     
-    private Set<String> getDecryptionCombinations(String srcWord, String resultWord) {
-        Set<String> combinationSet = getCombinationSet(MATRIX_SIDE);
-        
-        Set<String> resultCombinationSet = new HashSet<>();
-        for(String combination: combinationSet) {
-            if(checkDecryptionCombination(srcWord, resultWord, combination)) {
-                resultCombinationSet.add(combination);
-            }
-        }
-        
-        return resultCombinationSet;
-    }
-    
-    private boolean checkDecryptionCombination(String srcWord, String resultWord, String combination) {
-        char[] srcWordStrArray = new char[srcWord.length()];
-        for(int x=0; x<srcWord.length(); x++) {                
-            srcWordStrArray[x] = srcWord.charAt(x);
-        }
-        
-        //encode
-        char[] encodedSrcWordX = new char[srcWord.length()];
-        for(int x=0; x<MATRIX_SIDE; x++) {   
-            encodedSrcWordX[x] = 
-                    srcWordStrArray[(byte)(combination.charAt(x) - '0')];
-        }
-        
-        return resultWord.equals(new String(encodedSrcWordX));
-    }
-    
     private Set<String> getCombinationSet(int size) {
         Integer[] sequence = new Integer[size];        
         NarayanaAlhorithm.initSequence(sequence);// Формирование исходной последовательности
@@ -343,43 +302,5 @@ public class lab1RestController {
         
         return resultSet;
     }
-    
-    
-    {
-        //        Integer[] sequence = new Integer[MATRIX_SIDE];        
-//        NarayanaAlhorithm.initSequence(sequence);// Формирование исходной последовательности
-//        
-//        System.out.println("Неубывающая последовательность и её перестановки:");
-//        do {
-//            System.out.println();
-//            for(int i=0; i<MATRIX_SIDE; i++) {
-//                tempBuffer[i] = rowWord.charAt(sequence[i]);
-//                System.out.print(tempBuffer[i]);
-//            }
-//            rowWordListAll.add(new String(tempBuffer));
-//            for(int i=0; i<MATRIX_SIDE; i++) {
-//                tempBuffer[i] = columnWord.charAt(sequence[i]);
-//                System.out.print(tempBuffer[i]);
-//            }
-//            columnWordListAll.add(new String(tempBuffer));
-//        } while (NarayanaAlhorithm.nextPermutation(sequence, NarayanaAlhorithm::less));
-//        
-//        System.out.println("Невозрастающая последовательность и её перестановки:");
-//        do {
-//            System.out.println();
-//            for(int i=0; i<MATRIX_SIDE; i++) {
-//                tempBuffer[i] = rowWord.charAt(sequence[i]);
-//                System.out.print(tempBuffer[i]);
-//            }
-//            rowWordListAll.add(new String(tempBuffer));
-//            for(int i=0; i<MATRIX_SIDE; i++) {
-//                tempBuffer[i] = columnWord.charAt(sequence[i]);
-//                System.out.print(tempBuffer[i]);
-//            }
-//            columnWordListAll.add(new String(tempBuffer));
-//        } while (NarayanaAlhorithm.nextPermutation(sequence, NarayanaAlhorithm::greater));
-    }
-    
-    
     
 }
