@@ -12,7 +12,7 @@ import lombok.Setter;
  *
  * @author apu
  */
-public class Lab2RestDecryptMessageResponse extends RestBasePacket {
+public class Lab2RestEncryptMessageResponse extends RestBasePacket {
     
     @Getter @Setter
     private String message;
@@ -21,10 +21,10 @@ public class Lab2RestDecryptMessageResponse extends RestBasePacket {
     private String number;
     
     @Getter @Setter
-    private String decryptedMessage;;
+    private String encryptedMessage;
 
-    public Lab2RestDecryptMessageResponse() {
-        this.packetType = RestPacketType.DECRYPT_MESSAGE_RESPONSE;
+    public Lab2RestEncryptMessageResponse() {
+        this.packetType = RestPacketType.ENCRYPT_MESSAGE_RESPONSE;
     }
     
 }
