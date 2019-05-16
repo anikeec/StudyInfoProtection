@@ -18,6 +18,13 @@ function modifyElementsAccordingToState(state) {
                                 break;
         case StateEnum.ST_ENCRYPT_MESSAGE_REQ_ERROR:
                                 break; 
+        case StateEnum.ST_DECRYPT_MESSAGE_REQ_SENT:
+                                $('#decryptedTable tbody').empty();
+                                break;
+        case StateEnum.ST_DECRYPT_MESSAGE_REQ_RECEIVED:
+                                break;
+        case StateEnum.ST_DECRYPT_MESSAGE_REQ_ERROR:
+                                break; 
         case StateEnum.ST_ERROR:
         default:
                                 break;                    

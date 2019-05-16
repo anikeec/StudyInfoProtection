@@ -141,10 +141,10 @@ public class lab1RestController {
         
         response.setColumnSequence(columnSequenceStr);
         response.setRowSequence(rowSequenceStr);
-        response.setColumnWord(new String(encodedColumnWord));
-        response.setRowWord(new String(encodedRowWord));
-        response.setEncryptedColumnWord(columnWord);
-        response.setEncryptedRowWord(rowWord);
+        response.setColumnWord(columnWord);
+        response.setRowWord(rowWord);
+        response.setEncryptedColumnWord(new String(encodedColumnWord));
+        response.setEncryptedRowWord(new String(encodedRowWord));
         
         return response;
     }
