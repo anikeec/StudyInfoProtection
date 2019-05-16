@@ -30,20 +30,7 @@
                   <li><a href="/lab1.html">lab1</a></li>
                   <li><a href="/lab2.html">lab2</a></li>
                   <li><a href="/lab4.html">lab4</a></li>
-                  <li><a href="/lab5.html">lab7</a></li>
-                  
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" 
-                       role="button" aria-haspopup="true" 
-                       aria-expanded="false">Operations <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="/lab1.html">lab1</a></li>
-                    </ul>
-                  </li>
-                  
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                  <li><a href="/logout" id="logoutLink"><span class="glyphicon glyphicon-log-out"></span> Exit</a></li>
+                  <li><a href="/lab5.html">lab7</a></li>                  
                 </ul>
               </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
@@ -85,7 +72,10 @@
                                  name="columnSequenceInput" id="columnSequenceInput" placeholder="0 1 2 3">
                     </div>
                     <button type="submit" class="btn btn-primary " 
-                            id="gerResultButton">Encrypt</button>
+                            id="gerResultButton">Encrypt
+                        <span id="gerResultButtonSpinner" class="glyphicon glyphicon-refresh spinning" 
+                              style="display:none"></span>
+                    </button>
                     <div class="form-group">
                         <label for="encodedMessage" class="control-label"
                                style="margin-top: 10px;">Encrypted message:</label>
@@ -124,7 +114,10 @@
                                  name="encryptedColumnWordInput" id="encryptedColumnWordInput" placeholder="word">
                     </div>
                     <button type="submit" class="btn btn-primary " 
-                            id="gerDecryptResultButton">Decrypt</button>
+                            id="gerDecryptResultButton">Decrypt
+                        <span id="gerDecryptResultButtonSpinner" class="glyphicon glyphicon-refresh spinning" 
+                              style="display:none"></span>
+                    </button>
 
                 </form> 
                 <label for="decryptedTable" class="control-label" style="margin-top: 10px;">

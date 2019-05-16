@@ -62,7 +62,8 @@ String.prototype.isNumber = function() {
 //answer handler
 //------------------------------------------------------------------------------
 function encryptMessageResponseJsonHandle(response) {
-   var packetType = JSON.parse(response).packetType; 
+   var packetType = JSON.parse(response).packetType;
+    $( "#gerResultButtonSpinner" ).hide();
     if(packetType === 'EncryptMessageResponse') {
         UTILS.setConnectedStatus('EncryptMessageResponse received successfully.');
         state = StateEnum.ST_ENCRYPT_MESSAGE_REQ_RECEIVED; 
@@ -81,6 +82,7 @@ function encryptMessageResponseJsonHandle(response) {
 
 function decryptMessageResponseJsonHandle(response) {
    var packetType = JSON.parse(response).packetType; 
+    $( "#gerDecryptResultButtonSpinner" ).hide();
     if(packetType === 'DecryptMessageResponse') {
         UTILS.setConnectedStatus('DecryptMessageResponse received successfully.');
         state = StateEnum.ST_DECRYPT_MESSAGE_REQ_RECEIVED; 
@@ -116,6 +118,8 @@ function encryptMessage() {
     var rowSequence = $("#rowSequenceInput").val();
     var columnSequence = $("#columnSequenceInput").val();
     
+    $( "#gerResultButtonSpinner" ).show();
+    
     state = StateEnum.ST_ENCRYPT_MESSAGE_REQ_SENT;
     modifyElementsAccordingToState(state); 
     UTILS.responseWaitingStart(SERVER_QUERY_TIMEOUT);
@@ -132,6 +136,8 @@ function decryptMessage() {
     var sourceMessage = $("#encryptedMessageInput").val();
     var rowWord = $("#encryptedRowWordInput").val();
     var columnWord = $("#encryptedColumnWordInput").val();
+    
+    $( "#gerDecryptResultButtonSpinner" ).show();
     
     state = StateEnum.ST_DECRYPT_MESSAGE_REQ_SENT;
     modifyElementsAccordingToState(state); 
