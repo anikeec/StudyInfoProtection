@@ -12,7 +12,7 @@ import lombok.Setter;
  *
  * @author apu
  */
-public class RestDecryptMessageRequest extends RestBasePacket {
+public class Lab1RestDecryptMessageRequest extends RestBasePacket {
     
     @Getter 
     private String sourceMessage;
@@ -23,7 +23,7 @@ public class RestDecryptMessageRequest extends RestBasePacket {
     @Getter @Setter
     private String columnWord;
 
-    public RestDecryptMessageRequest() {
+    public Lab1RestDecryptMessageRequest() {
         this.packetType = RestPacketType.DECRYPT_MESSAGE_REQUEST;
     }
     

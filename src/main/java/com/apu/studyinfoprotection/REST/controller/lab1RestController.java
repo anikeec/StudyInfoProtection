@@ -7,10 +7,10 @@ package com.apu.studyinfoprotection.REST.controller;
 import com.apu.studyinfoprotection.lab1.Dictionaries;
 import com.apu.studyinfoprotection.REST.api.DecryptedMessage;
 import com.apu.studyinfoprotection.REST.api.RestBasePacket;
-import com.apu.studyinfoprotection.REST.api.RestDecryptMessageRequest;
-import com.apu.studyinfoprotection.REST.api.RestDecryptMessageResponse;
-import com.apu.studyinfoprotection.REST.api.RestEncryptMessageRequest;
-import com.apu.studyinfoprotection.REST.api.RestEncryptMessageResponse;
+import com.apu.studyinfoprotection.REST.api.Lab1RestDecryptMessageRequest;
+import com.apu.studyinfoprotection.REST.api.Lab1RestDecryptMessageResponse;
+import com.apu.studyinfoprotection.REST.api.Lab1RestEncryptMessageRequest;
+import com.apu.studyinfoprotection.REST.api.Lab1RestEncryptMessageResponse;
 import com.apu.studyinfoprotection.REST.api.RestErrorPacket;
 import com.apu.studyinfoprotection.lab1.EncryptedWord;
 import com.apu.studyinfoprotection.lab1.Lab1;
@@ -42,7 +42,7 @@ public class lab1RestController {
     
     @RequestMapping(path="/rest/lab1/encrypt",  method=RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public RestBasePacket encryptMessage(@RequestBody RestEncryptMessageRequest request) {
+    public RestBasePacket encryptMessage(@RequestBody Lab1RestEncryptMessageRequest request) {
    
         String sourceMessage = request.getSourceMessage().trim();
         if(sourceMessage.length() == 0) {
@@ -130,7 +130,7 @@ public class lab1RestController {
             }
         }
         
-        RestEncryptMessageResponse response = new RestEncryptMessageResponse();
+        Lab1RestEncryptMessageResponse response = new Lab1RestEncryptMessageResponse();
         
         StringBuilder sb = new StringBuilder();
         
@@ -157,7 +157,7 @@ public class lab1RestController {
     
     @RequestMapping(path="/rest/lab1/decrypt",  method=RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public RestBasePacket decryptMessage(@RequestBody RestDecryptMessageRequest request) {
+    public RestBasePacket decryptMessage(@RequestBody Lab1RestDecryptMessageRequest request) {
         
         Lab1 lab1 = new Lab1();
         
@@ -226,7 +226,7 @@ public class lab1RestController {
             }
         }        
 
-        RestDecryptMessageResponse response = new RestDecryptMessageResponse();
+        Lab1RestDecryptMessageResponse response = new Lab1RestDecryptMessageResponse();
         
         response.setSourceMessage(sourceMessage);
         response.setRowWord(rowWord);
