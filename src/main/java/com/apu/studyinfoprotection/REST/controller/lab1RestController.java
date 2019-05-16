@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package com.apu.studyinfoprotection.REST.controller;
-import com.apu.studyinfoprotection.NarayanaAlhorithm;
+import com.apu.studyinfoprotection.Dictionaries;
 import com.apu.studyinfoprotection.REST.api.DecryptedMessage;
 import com.apu.studyinfoprotection.REST.api.RestBasePacket;
 import com.apu.studyinfoprotection.REST.api.RestDecryptMessageRequest;
@@ -13,19 +13,15 @@ import com.apu.studyinfoprotection.REST.api.RestEncryptMessageRequest;
 import com.apu.studyinfoprotection.REST.api.RestEncryptMessageResponse;
 import com.apu.studyinfoprotection.REST.api.RestErrorPacket;
 import com.apu.studyinfoprotection.lab1.EncryptedWord;
-import com.apu.studyinfoprotection.utils.FileUtils;
-import java.io.IOException;
+import com.apu.studyinfoprotection.lab1.Lab1;
+import static com.apu.studyinfoprotection.lab1.Lab1.MATRIX_SIDE;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,9 +37,8 @@ public class lab1RestController {
     private static final Logger LOGGER = 
                         LogManager.getLogger(lab1RestController.class);
     
-    private final int MATRIX_SIDE = 4;
     private final int SEQUENCE_SIZE = (MATRIX_SIDE * 2) - 1;
-    private final int TEXT_SIZE_MAX = MATRIX_SIDE * MATRIX_SIDE;
+    private final int TEXT_SIZE_MAX = MATRIX_SIDE * MATRIX_SIDE; 
     
     @RequestMapping(path="/rest/lab1/encrypt",  method=RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -164,6 +159,8 @@ public class lab1RestController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public RestBasePacket decryptMessage(@RequestBody RestDecryptMessageRequest request) {
         
+        Lab1 lab1 = new Lab1();
+        
         String sourceMessage = request.getSourceMessage().trim();
         if(sourceMessage.length() == 0) {
             return new RestErrorPacket("Wrong sourceMessage length");
@@ -194,7 +191,7 @@ public class lab1RestController {
         
         char[] tempBuffer = new char[MATRIX_SIDE];
         
-        Set<String> combinationSet = getCombinationSet(MATRIX_SIDE);
+        Set<String> combinationSet = lab1.getCombinationSet(MATRIX_SIDE);
         
         for(String sequence:combinationSet) {
             System.out.println();
@@ -215,13 +212,16 @@ public class lab1RestController {
         Set<EncryptedWord> rowWordGoodList = new HashSet<>();
         Set<EncryptedWord> columnWordGoodList = new HashSet<>();
         
-        findGoodResultWordsCombination(rowWordListAll, columnWordListAll, rowWordGoodList, columnWordGoodList);
+        Dictionaries.findGoodResultWordsCombination(rowWordListAll, 
+                                                    columnWordListAll, 
+                                                    rowWordGoodList, 
+                                                    columnWordGoodList);
         
         List<DecryptedMessage> decrMsgList = new ArrayList<>();
         for(EncryptedWord foundRowWord:rowWordGoodList) {
             for(EncryptedWord foundColumnWord:columnWordGoodList) {
                 Set<DecryptedMessage> decryptedMsgSet = 
-                        decryptMessage(sourceMessage, foundRowWord, foundColumnWord);
+                    lab1.decryptMessage(sourceMessage, foundRowWord, foundColumnWord);
                 decrMsgList.addAll(decryptedMsgSet);
             }
         }        
@@ -235,154 +235,5 @@ public class lab1RestController {
         
         return response;
     }
-    
-    private Set<DecryptedMessage> decryptMessage(String encryptedMsg,
-                                        EncryptedWord foundRowWord, 
-                                        EncryptedWord foundColumnWord) {
 
-        Set<DecryptedMessage> result = new HashSet<>();
-        
-        String message = decryptMessage(encryptedMsg, 
-                                            foundRowWord.getCombination(), 
-                                            foundColumnWord.getCombination());
-        
-        result.add(new DecryptedMessage(message,
-                                        foundRowWord.getResultWord(),
-                                        foundColumnWord.getResultWord()
-                                        ));
-
-        return result;
-    }
-    
-    private String decryptMessage(String encryptedMsg,
-                                String decryptionRowCombination, 
-                                String decryptionColumnCombination) {
-        
-        char[][] sourceMessageStrArray = new char[MATRIX_SIDE][MATRIX_SIDE];
-            for(int y=0; y<MATRIX_SIDE; y++) {
-                for(int x=0; x<MATRIX_SIDE; x++) {                
-                    if(x + (y*MATRIX_SIDE) >= encryptedMsg.length())
-                        continue;
-                    sourceMessageStrArray[y][x] = encryptedMsg.charAt(x + (y*MATRIX_SIDE));
-                }
-            }
-        
-        //encode
-        char[][] encodedMessageStrArrayX = new char[MATRIX_SIDE][MATRIX_SIDE];
-        for(int y=0; y<MATRIX_SIDE; y++) {
-            for(int x=0; x<MATRIX_SIDE; x++) {   
-                encodedMessageStrArrayX[y][x] = 
-                        sourceMessageStrArray[y][(byte)(decryptionColumnCombination.charAt(x) - '0')];
-            }
-        }
-        
-        char[][] encodedMessageStrArrayY = new char[MATRIX_SIDE][MATRIX_SIDE];
-        for(int x=0; x<MATRIX_SIDE; x++) {   
-            for(int y=0; y<MATRIX_SIDE; y++) {
-                encodedMessageStrArrayY[y][x] = 
-                        encodedMessageStrArrayX[(byte)(decryptionRowCombination.charAt(y) - '0')][x];
-            }
-        }
-        
-        StringBuilder sb = new StringBuilder();
-        for(int y=0; y<MATRIX_SIDE; y++) {
-            sb.append(new String(encodedMessageStrArrayY[y]));
-        } 
-        
-        return sb.toString();
-    }
-    
-    private Set<String> getCombinationSet(int size) {
-        Integer[] sequence = new Integer[size];        
-        NarayanaAlhorithm.initSequence(sequence);// Формирование исходной последовательности
-        
-        Set<String> resultSet = new HashSet<>();
-        char[] tempBuffer = new char[size];
-        System.out.println("Неубывающая последовательность и её перестановки:");
-        do {
-            for(int i=0; i<MATRIX_SIDE; i++) {
-                tempBuffer[i] = (char)('0' + sequence[i]);
-            }
-            resultSet.add(new String(tempBuffer));
-        } while (NarayanaAlhorithm.nextPermutation(sequence, NarayanaAlhorithm::less));
-        
-        System.out.println("Невозрастающая последовательность и её перестановки:");
-        do {
-            for(int i=0; i<MATRIX_SIDE; i++) {
-                tempBuffer[i] = (char)('0' + sequence[i]);
-            }
-            resultSet.add(new String(tempBuffer));
-        } while (NarayanaAlhorithm.nextPermutation(sequence, NarayanaAlhorithm::greater));
-        
-        return resultSet;
-    }
-    
-    private static final String RUSSIAN_DICTIONARY = "./pldb-win.txt";
-    private static final String ENGLISH_DICTIONARY = "./english.txt";
-    
-    private Set<EncryptedWord> findGoodResultWords(Set<EncryptedWord> srcWordsSet) {
-        
-        String text = null;
-        try {
-            text = FileUtils.getTextFromFile(RUSSIAN_DICTIONARY);
-        } catch(IOException ex) {
-            return srcWordsSet;
-        }
-        
-        Set<EncryptedWord> resultSet = new HashSet<>();
-        for(EncryptedWord encryptedWord: srcWordsSet) {
-            if(text.contains(" " + encryptedWord.getResultWord() + "/r/n")) {//Character.toString((char)0x0D)
-                resultSet.add(encryptedWord);
-            }
-        }
-        
-        try {
-            text = FileUtils.getTextFromFile(ENGLISH_DICTIONARY);
-        } catch(IOException ex) {
-            return srcWordsSet;
-        }
-        
-        for(EncryptedWord encryptedWord: srcWordsSet) {
-            if(text.contains(encryptedWord.getResultWord() + "/r/n")) {
-                resultSet.add(encryptedWord);
-            }
-        }
-        
-        //temp state
-        return resultSet;
-    }
-    
-    private void findGoodResultWordsCombination(Set<EncryptedWord> rowWordSetAll, 
-                                                Set<EncryptedWord> columnWordSetAll, 
-                                                Set<EncryptedWord> rowWordGoodSet, 
-                                                Set<EncryptedWord> columnWordGoodSet) {
-        
-        Set<EncryptedWord> rowWordTempSet = findGoodResultWords(rowWordSetAll);
-        Set<EncryptedWord> columnWordTempSet = findGoodResultWords(columnWordSetAll);
-        
-        String russianDictionary;
-        String englishDictionary;
-        try {
-            russianDictionary = FileUtils.getTextFromFile(RUSSIAN_DICTIONARY);
-            englishDictionary = FileUtils.getTextFromFile(ENGLISH_DICTIONARY);
-        } catch(IOException ex) {
-            rowWordGoodSet = rowWordTempSet;
-            columnWordGoodSet = columnWordTempSet;
-            return;
-        }       
-        
-        Set<EncryptedWord> resultSet = new HashSet<>();
-        for(EncryptedWord encryptedColumnWord: columnWordTempSet) {
-            for(EncryptedWord encryptedRowWord: rowWordTempSet) {
-                if((russianDictionary.contains(" " + encryptedRowWord.getResultWord() + "/r/n") ||
-                        englishDictionary.contains("/r/n" + encryptedRowWord.getResultWord() + "/r/n")) && 
-                    (russianDictionary.contains(" " + encryptedColumnWord.getResultWord() + "/r/n") ||
-                        englishDictionary.contains("/r/n" + encryptedColumnWord.getResultWord() + "/r/n"))) {
-                    rowWordGoodSet.add(encryptedRowWord);
-                    columnWordGoodSet.add(encryptedColumnWord);
-                }
-            }
-        }
-    };
-    
 }
