@@ -29,7 +29,7 @@
                 <ul class="nav navbar-nav">
                   <li class="active"><a href="/lab1.html">lab1</a></li>
                   <li><a href="/lab2.html">lab2</a></li>
-                  <li><a href="/lab4.html">lab4</a></li>
+                  <li><a href="/lab5.html">lab5</a></li>
                   <li><a href="/lab5.html">lab7</a></li>                  
                 </ul>
               </div><!-- /.navbar-collapse -->
@@ -113,6 +113,9 @@
                         <input type="text" class="form-control" style="width: 120px;" 
                                  name="encryptedColumnWordInput" id="encryptedColumnWordInput" placeholder="word">
                     </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" checked="checked" id="useDictionaryCheckbox"> Use dictionaries</label>
+                    </div>
                     <button type="submit" class="btn btn-primary " 
                             id="gerDecryptResultButton">Decrypt
                         <span id="gerDecryptResultButtonSpinner" class="glyphicon glyphicon-refresh spinning" 
@@ -121,7 +124,7 @@
 
                 </form> 
                 <label for="decryptedTable" class="control-label" style="margin-top: 10px;">
-                    Decryption results:
+                    Decryption results (<span id="resultAmount"></span>):
                 </label>
                 <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 250pt; overflow: auto; border: solid lightgrey;">
                     <table class="table table-bordered table-striped mb-0" id="decryptedTable">

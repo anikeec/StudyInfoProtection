@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Labs.</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="lab5.css">
+    <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet" crossorigin="anonymous">   
+</head>
+<body>
+<noscript><h2 style="color: #ff0000; text-align: center;">Seems your browser doesn't support Javascript! 
+    Please enable Javascript and reload this page!</h2></noscript>
+    <div id="main-content" class="container">
+        <nav class="navbar navbar-default">
+            <div id="mainNavbar" class="container-fluid">
+              <!-- Brand and toggle get grouped for better mobile display -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                  <li><a href="/lab1.html">lab1</a></li>
+                  <li><a href="/lab2.html">lab2</a></li>
+                  <li class="active"><a href="/lab5.html">lab5</a></li>
+                  <li><a href="/lab5.html">lab7</a></li>                  
+                </ul>
+              </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
+        <div class="row">
+            <div class="col-md-12 alert alert-danger fade in" id="alertMessageDiv">
+                <strong id="alertMessage"></strong>
+            </div>
+        </div>  
+        
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <label class="control-label"><h3>Adding signature.</h3></label>
+                <form >                    
+                    <div class="form-group">
+                        <label for="sourceMessageInput" class="control-label">Source message: </label>
+                        <input type="text" class="form-control" style="width: 300px;" 
+                               name="sourceMessageInput" id="sourceMessageInput" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="keyLengthInput" class="control-label">Key length: </label>
+                        <input type="text" class="form-control" style="width: 120px;" 
+                               name="keyLengthInput" id="keyLengthInput" placeholder="1024">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary " 
+                                id="addSignatureButton">Add signature
+                            <span id="addSignatureButtonSpinner" class="glyphicon glyphicon-refresh spinning" 
+                                  style="display:none"></span>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label for="publicKeyTextArea">Public key:</label>
+                        <textarea class="form-control" id="publicKeyTextArea" rows="10" readonly=""
+                              style="font-size: 12px;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="privateKeyTextArea">Private key:</label>
+                        <textarea class="form-control" id="privateKeyTextArea" rows="10" readonly=""
+                              style="font-size: 12px;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="signTextArea">Sign:</label>
+                        <textarea class="form-control" id="signTextArea" rows="3" readonly=""
+                              style="font-size: 12px;"></textarea>
+                    </div>
+                </form> 
+            </div>
+            
+            <div class="col-md-6 col-sm-6">
+                <label class="control-label"><h3>Signed checking.</h3></label>
+                <form >  
+                    <div class="form-group">
+                        <label for="signedMessageInput" class="control-label">Signed message: </label>
+                        <input type="text" class="form-control" style="width: 300px;" 
+                               name="signedMessageInput" id="signedMessageInput" required="">
+                    </div>                                       
+                    <div class="form-group">
+                        <label for="publicKeyForCheckingTextArea">Public key:</label>
+                        <textarea class="form-control" id="publicKeyForCheckingTextArea" rows="10" 
+                              style="font-size: 12px;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="signForCheckingTextArea">Sign:</label>
+                        <textarea class="form-control" id="signForCheckingTextArea" rows="2" 
+                              style="font-size: 12px;"></textarea>
+                    </div> 
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary " 
+                                id="checkSignatureButton">Check signature
+                            <span id="checkSignatureButtonSpinner" class="glyphicon glyphicon-refresh spinning" 
+                                  style="display:none"></span>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label for="signatureTextArea">Result:</label>
+                        <textarea class="form-control" id="signatureTextArea" rows="1" readonly=""
+                              style="font-size: 14px;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="publicKeyDetailedTextArea">Public key details:</label>
+                        <textarea class="form-control" id="publicKeyDetailedTextArea" rows="20" readonly=""
+                              style="font-size: 12px;"></textarea>
+                    </div>
+                </form> 
+            </div>            
+        </div>
+
+    </div>
+    
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/jquery-cookie/jquery.cookie.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script src="utils.js"></script>
+    <script src="lab5.js"></script>
+</body>
+</html>

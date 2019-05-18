@@ -186,6 +186,12 @@ public class lab1RestController {
             return new RestErrorPacket("Wrong columnWord length");
         }
         
+        String vocabularyStr = request.getVocabulary();
+        boolean vocabulary = false;
+        if((vocabularyStr != null) && (vocabularyStr.equalsIgnoreCase("true"))) {
+            vocabulary = true;
+        }
+        
         Set<EncryptedWord> rowWordListAll = new HashSet<>();
         Set<EncryptedWord> columnWordListAll = new HashSet<>();
         
@@ -212,10 +218,15 @@ public class lab1RestController {
         Set<EncryptedWord> rowWordGoodList = new HashSet<>();
         Set<EncryptedWord> columnWordGoodList = new HashSet<>();
         
+        if(vocabulary == true) {
         Dictionaries.findGoodResultWordsCombination(rowWordListAll, 
                                                     columnWordListAll, 
                                                     rowWordGoodList, 
                                                     columnWordGoodList);
+        } else {
+            rowWordGoodList.addAll(rowWordListAll);
+            columnWordGoodList.addAll(columnWordListAll);
+        }
         
         List<Lab1DecryptedMessage> decrMsgList = new ArrayList<>();
         for(EncryptedWord foundRowWord:rowWordGoodList) {
@@ -232,6 +243,7 @@ public class lab1RestController {
         response.setRowWord(rowWord);
         response.setColumnWord(columnWord);
         response.setList(decrMsgList);
+        response.setAmount("" + decrMsgList.size());
         
         return response;
     }

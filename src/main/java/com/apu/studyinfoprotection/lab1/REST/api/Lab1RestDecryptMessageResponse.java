@@ -28,6 +28,9 @@ public class Lab1RestDecryptMessageResponse extends RestBasePacket {
     private String columnWord;
     
     @Getter @Setter
+    private String amount;
+    
+    @Getter @Setter
     List<Lab1DecryptedMessage> list = new ArrayList<>();
 
     public Lab1RestDecryptMessageResponse() {

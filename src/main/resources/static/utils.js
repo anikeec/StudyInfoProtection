@@ -28,7 +28,15 @@
                 
                 "ST_DECRYPT_MESSAGE_REQ_SENT":          8, 
                 "ST_DECRYPT_MESSAGE_REQ_RECEIVED":      9,
-                "ST_DECRYPT_MESSAGE_REQ_ERROR":         10
+                "ST_DECRYPT_MESSAGE_REQ_ERROR":         10,
+                
+                "ST_SIGN_MESSAGE_REQ_SENT":             11, 
+                "ST_SIGN_MESSAGE_REQ_RECEIVED":         12,
+                "ST_SIGN_MESSAGE_REQ_ERROR":            13,
+                
+                "ST_CHECK_SIGNED_MESSAGE_REQ_SENT":     14, 
+                "ST_CHECK_SIGNED_MESSAGE_REQ_RECEIVED": 15,
+                "ST_CHECK_SIGNED_MESSAGE_REQ_ERROR":    16
                 
             };
 

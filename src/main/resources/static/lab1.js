@@ -20,6 +20,7 @@ function modifyElementsAccordingToState(state) {
                                 break; 
         case StateEnum.ST_DECRYPT_MESSAGE_REQ_SENT:
                                 $('#decryptedTable tbody').empty();
+                                $("#resultAmount").val();
                                 break;
         case StateEnum.ST_DECRYPT_MESSAGE_REQ_RECEIVED:
                                 break;
@@ -85,7 +86,8 @@ function decryptMessageResponseJsonHandle(response) {
     $( "#gerDecryptResultButtonSpinner" ).hide();
     if(packetType === 'DecryptMessageResponse') {
         UTILS.setConnectedStatus('DecryptMessageResponse received successfully.');
-        state = StateEnum.ST_DECRYPT_MESSAGE_REQ_RECEIVED; 
+        state = StateEnum.ST_DECRYPT_MESSAGE_REQ_RECEIVED;
+        $("#resultAmount").text(JSON.parse(response).amount);
         $.each(JSON.parse(response).list, function(i, item) {
             insertTableItem(i, item);        
         });
@@ -136,6 +138,12 @@ function decryptMessage() {
     var sourceMessage = $("#encryptedMessageInput").val();
     var rowWord = $("#encryptedRowWordInput").val();
     var columnWord = $("#encryptedColumnWordInput").val();
+    var useDictionary;
+    if($('#useDictionaryCheckbox').is(':checked')) {
+            useDictionary = true;
+        } else {
+            useDictionary = false;
+        }
     
     $( "#gerDecryptResultButtonSpinner" ).show();
     
@@ -145,7 +153,8 @@ function decryptMessage() {
     asyncRESTRequestHandler({'cmd': 'decryptMessage',
                                 'sourceMessage' : sourceMessage,
                                 'rowWord' : rowWord,
-                                'columnWord' : columnWord});
+                                'columnWord' : columnWord,
+                                'vocabulary' : useDictionary});
     UTILS.setConnectedStatus("EncryptMessageRequest sent");    
 }
 
@@ -187,7 +196,8 @@ function asyncRESTRequestHandler(data) {
             json = JSON.stringify({packetType:"DecryptMessageRequest",
                                     'sourceMessage' : data.sourceMessage,
                                     'rowWord' : data.rowWord,
-                                    'columnWord' : data.columnWord});
+                                    'columnWord' : data.columnWord,
+                                    'vocabulary' : data.vocabulary});
             console.log(json);
             xhr.send(json);
             break; 

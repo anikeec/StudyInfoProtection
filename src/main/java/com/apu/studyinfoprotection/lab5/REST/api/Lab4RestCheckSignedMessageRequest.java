@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.apu.studyinfoprotection.lab1.REST.api;
+package com.apu.studyinfoprotection.lab5.REST.api;
 
 import com.apu.studyinfoprotection.REST.api.RestBasePacket;
 import com.apu.studyinfoprotection.REST.api.RestPacketType;
@@ -14,22 +14,19 @@ import lombok.Setter;
  *
  * @author apu
  */
-public class Lab1RestDecryptMessageRequest extends RestBasePacket {
-    
-    @Getter 
-    private String sourceMessage;
+public class Lab4RestCheckSignedMessageRequest extends RestBasePacket {
     
     @Getter @Setter
-    private String rowWord;
+    private String message;
     
     @Getter @Setter
-    private String columnWord;
+    private String sign;
     
     @Getter @Setter
-    private String vocabulary;
+    private String publicKey;
 
-    public Lab1RestDecryptMessageRequest() {
-        this.packetType = RestPacketType.DECRYPT_MESSAGE_REQUEST;
+    public Lab4RestCheckSignedMessageRequest() {
+        this.packetType = RestPacketType.CHECK_SIGNED_MESSAGE_REQUEST;
     }
     
 }
